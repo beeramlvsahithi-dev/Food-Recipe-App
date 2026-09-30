@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Signup | Food Recipe</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f8f8f8;
+            color: #222;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 72px;
+            background: #292929;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 55px;
+        }
+
+        .logo {
+            width: 150px;
+            height: 62px;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            margin-left: 45px;
+            flex: 1;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #ff9f0a;
+        }
+
+        .home-btn {
+            background: transparent;
+            color: white;
+
+            border: 1px solid #ff9f0a;
+
+            padding: 9px 17px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .home-btn:hover {
+            background: #ff9f0a;
+            color: #222;
+        }
+
+        /* ================= SIGNUP AREA ================= */
+
+        .signup-section {
+            min-height: calc(100vh - 72px);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 35px 20px;
+
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(255, 159, 10, 0.12),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(63, 125, 88, 0.12),
+                    transparent 30%
+                ),
+                #f8f8f8;
+        }
+
+        /* ================= CARD ================= */
+
+        .signup-card {
+            width: 470px;
+
+            background: white;
+
+            border-radius: 16px;
+
+            padding: 30px 40px;
+
+            border: 1px solid #e4e4e4;
+
+            box-shadow:
+                0 12px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .logo-box {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .logo-box img {
+            width: 110px;
+            height: 65px;
+            object-fit: contain;
+        }
+
+        .admin-icon {
+            text-align: center;
+            font-size: 35px;
+            margin-bottom: 5px;
+        }
+
+        .admin-badge {
+            width: fit-content;
+
+            margin: 0 auto 12px;
+
+            padding: 6px 15px;
+
+            background: #e8f5ed;
+            color: #2f7148;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .signup-card h1 {
+            text-align: center;
+            font-size: 27px;
+            margin-bottom: 7px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 22px;
+        }
+
+        /* ================= FORM ================= */
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .input-box {
+            position: relative;
+        }
+
+        .input-box span {
+            position: absolute;
+
+            left: 14px;
+            top: 12px;
+
+            font-size: 17px;
+        }
+
+        .input-box input {
+            width: 100%;
+
+            padding: 12px 14px 12px 43px;
+
+            border: 1px solid #d8d8d8;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            outline: none;
+        }
+
+        .input-box input:focus {
+            border-color: #3f7d58;
+
+            box-shadow:
+                0 0 0 3px rgba(63, 125, 88, 0.10);
+        }
+
+        /* ================= TWO COLUMNS ================= */
+
+        .form-row {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 15px;
+        }
+
+        /* ================= TERMS ================= */
+
+        .terms {
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 8px;
+
+            margin: 5px 0 18px;
+
+            color: #666;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+        .terms input {
+            margin-top: 3px;
+
+            accent-color: #3f7d58;
+        }
+
+        /* ================= BUTTON ================= */
+
+        .signup-btn {
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #3f7d58;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .signup-btn:hover {
+            background: #326747;
+        }
+
+        /* ================= MESSAGE ================= */
+
+        .message {
+            display: none;
+
+            margin-top: 13px;
+
+            padding: 10px;
+
+            border-radius: 7px;
+
+            text-align: center;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+        .success {
+            background: #e5f7eb;
+            color: #16803c;
+        }
+
+        .error {
+            background: #ffe7e5;
+            color: #c0392b;
+        }
+
+        /* ================= LOGIN ================= */
+
+        .login-text {
+            text-align: center;
+
+            margin-top: 18px;
+
+            color: #777;
+
+            font-size: 14px;
+        }
+
+        .login-text a {
+            color: #e77b00;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .login-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 750px) {
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .home-btn {
+                margin-left: auto;
+            }
+        }
+
+        @media (max-width: 520px) {
+
+            .signup-card {
+                width: 100%;
+                padding: 28px 22px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar">
+
+        <img
+            src="logo.png"
+            alt="Food Recipe Logo"
+            class="logo"
+        >
+
+        <nav class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="recipes.html">
+                All Recipes
+            </a>
+
+            <a href="cuisines.html">
+                Cuisines
+            </a>
+
+            <a href="meal-planner.html">
+                Meal Planner
+            </a>
+
+        </nav>
+
+        <button
+            class="home-btn"
+            onclick="goHome()"
+        >
+            ← Home
+        </button>
+
+    </header>
+
+
+    <!-- ================= SIGNUP ================= -->
+
+    <main class="signup-section">
+
+        <div class="signup-card">
+
+
+            <div class="logo-box">
+
+                <img
+                    src="logo.png"
+                    alt="Food Recipe"
+                >
+
+            </div>
+
+
+            <div class="admin-icon">
+                👨‍🍳
+            </div>
+
+
+            <div class="admin-badge">
+                ADMIN PORTAL
+            </div>
+
+
+            <h1>
+                Create Admin Account
+            </h1>
+
+
+            <p class="subtitle">
+                Create an administrator account for Food Recipe.
+            </p>
+
+
+            <form id="adminSignupForm">
+
+
+                <!-- NAME -->
+
+                <div class="form-group">
+
+                    <label for="adminName">
+                        Full Name
+                    </label>
+
+                    <div class="input-box">
+
+                        <span>👤</span>
+
+                        <input
+                            type="text"
+                            id="adminName"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="adminEmail">
+                        Admin Email
+                    </label>
+
+                    <div class="input-box">
+
+                        <span>✉️</span>
+
+                        <input
+                            type="email"
+                            id="adminEmail"
+                            placeholder="Enter admin email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- PHONE + ROLE -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="adminPhone">
+                            Phone Number
+                        </label>
+
+                        <div class="input-box">
+
+                            <span>📱</span>
+
+                            <input
+                                type="tel"
+                                id="adminPhone"
+                                placeholder="Phone number"
+                                pattern="[0-9]{10}"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="adminRole">
+                            Admin Role
+                        </label>
+
+                        <div class="input-box">
+
+                            <span>🛡️</span>
+
+                            <input
+                                type="text"
+                                id="adminRole"
+                                value="Administrator"
+                                readonly
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="adminPassword">
+                            Password
+                        </label>
+
+                        <div class="input-box">
+
+                            <span>🔒</span>
+
+                            <input
+                                type="password"
+                                id="adminPassword"
+                                placeholder="Create password"
+                                minlength="6"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="confirmPassword">
+                            Confirm Password
+                        </label>
+
+                        <div class="input-box">
+
+                            <span>🔐</span>
+
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                placeholder="Confirm password"
+                                minlength="6"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TERMS -->
+
+                <label class="terms">
+
+                    <input
+                        type="checkbox"
+                        id="terms"
+                        required
+                    >
+
+                    <span>
+                        I agree to the administrator
+                        terms and understand that
+                        account information is stored
+                        locally.
+                    </span>
+
+                </label>
+
+
+                <!-- BUTTON -->
+
+                <button
+                    type="submit"
+                    class="signup-btn"
+                >
+                    Create Admin Account →
+                </button>
+
+
+                <div
+                    id="message"
+                    class="message">
+                </div>
+
+
+            </form>
+
+
+            <!-- LOGIN -->
+
+            <div class="login-text">
+
+                Already have an admin account?
+
+                <a href="admin-login.html">
+                    Admin Login
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        const form =
+            document.getElementById("adminSignupForm");
+
+        const message =
+            document.getElementById("message");
+
+
+        form.addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+
+            const name =
+                document.getElementById("adminName")
+                .value.trim();
+
+            const email =
+                document.getElementById("adminEmail")
+                .value.trim();
+
+            const phone =
+                document.getElementById("adminPhone")
+                .value.trim();
+
+            const password =
+                document.getElementById("adminPassword")
+                .value;
+
+            const confirmPassword =
+                document.getElementById("confirmPassword")
+                .value;
+
+
+            /* Check password */
+
+            if (password !== confirmPassword) {
+
+                showMessage(
+                    "Passwords do not match.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            /* Check existing admin */
+
+            const existingAdmin =
+                JSON.parse(
+                    localStorage.getItem("adminUser")
+                );
+
+
+            if (
+                existingAdmin &&
+                existingAdmin.email === email
+            ) {
+
+                showMessage(
+                    "An admin account with this email already exists.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            /* Create admin object */
+
+            const admin = {
+
+                name: name,
+
+                email: email,
+
+                phone: phone,
+
+                role: "Administrator",
+
+                password: password
+
+            };
+
+
+            /* Save admin */
+
+            localStorage.setItem(
+                "adminUser",
+                JSON.stringify(admin)
+            );
+
+
+            showMessage(
+                "Admin account created successfully! Redirecting to login...",
+                "success"
+            );
+
+
+            setTimeout(function() {
+
+                window.location.href =
+                    "admin-login.html";
+
+            }, 1200);
+
+        });
+
+
+        function showMessage(text, type) {
+
+            message.textContent = text;
+
+            message.className =
+                "message " + type;
+
+            message.style.display =
+                "block";
+
+        }
+
+
+        function goHome() {
+
+            window.location.href =
+                "index.html";
+
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login | Food Recipe</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f8f8f8;
+            color: #222;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 72px;
+            background: #292929;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 55px;
+        }
+
+        .logo {
+            width: 150px;
+            height: 62px;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+
+            margin-left: 45px;
+
+            flex: 1;
+        }
+
+        .nav-links a {
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 16px;
+
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #ff9f0a;
+        }
+
+        .home-btn {
+            background: transparent;
+
+            color: white;
+
+            border: 1px solid #ff9f0a;
+
+            padding: 9px 17px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-weight: 600;
+        }
+
+        .home-btn:hover {
+            background: #ff9f0a;
+
+            color: #222;
+        }
+
+        /* ================= ADMIN AREA ================= */
+
+        .admin-section {
+            min-height: calc(100vh - 72px);
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 40px 20px;
+
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(255, 159, 10, 0.12),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(63, 125, 88, 0.12),
+                    transparent 30%
+                ),
+                #f8f8f8;
+        }
+
+        /* ================= LOGIN CARD ================= */
+
+        .admin-card {
+            width: 420px;
+
+            background: white;
+
+            border-radius: 16px;
+
+            padding: 35px 40px;
+
+            border: 1px solid #e4e4e4;
+
+            box-shadow:
+                0 12px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .logo-box {
+            text-align: center;
+
+            margin-bottom: 8px;
+        }
+
+        .logo-box img {
+            width: 120px;
+
+            height: 75px;
+
+            object-fit: contain;
+        }
+
+        .admin-icon {
+            text-align: center;
+
+            font-size: 40px;
+
+            margin-bottom: 5px;
+        }
+
+        .admin-badge {
+            width: fit-content;
+
+            margin: 0 auto 15px;
+
+            padding: 7px 16px;
+
+            background: #e8f5ed;
+
+            color: #2f7148;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .admin-card h1 {
+            text-align: center;
+
+            font-size: 28px;
+
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+
+            color: #777;
+
+            font-size: 14px;
+
+            margin-bottom: 28px;
+        }
+
+        /* ================= FORM ================= */
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+        .input-box {
+            position: relative;
+        }
+
+        .input-box span {
+            position: absolute;
+
+            left: 15px;
+
+            top: 13px;
+
+            font-size: 17px;
+        }
+
+        .input-box input {
+            width: 100%;
+
+            padding: 13px 15px 13px 45px;
+
+            border: 1px solid #d8d8d8;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+        .input-box input:focus {
+            border-color: #3f7d58;
+
+            box-shadow:
+                0 0 0 3px rgba(63, 125, 88, 0.10);
+        }
+
+        /* ================= BUTTON ================= */
+
+        .admin-login-btn {
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #3f7d58;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .admin-login-btn:hover {
+            background: #326747;
+        }
+
+        /* ================= MESSAGE ================= */
+
+        .message {
+            display: none;
+
+            margin-top: 15px;
+
+            padding: 11px;
+
+            border-radius: 7px;
+
+            text-align: center;
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+        .success {
+            background: #e5f7eb;
+
+            color: #16803c;
+        }
+
+        .error {
+            background: #ffe7e5;
+
+            color: #c0392b;
+        }
+
+        /* ================= LINKS ================= */
+
+        .back-user {
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #777;
+
+            font-size: 14px;
+        }
+
+        .back-user a {
+            color: #e77b00;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .back-user a:hover {
+            text-decoration: underline;
+        }
+
+        .create-admin {
+            text-align: center;
+
+            margin-top: 15px;
+
+            color: #777;
+
+            font-size: 14px;
+        }
+
+        .create-admin a {
+            color: #3f7d58;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .create-admin a:hover {
+            text-decoration: underline;
+        }
+
+        /* ================= INFO BOX ================= */
+
+        .info-box {
+            margin-top: 20px;
+
+            padding: 12px;
+
+            background: #f5f8f5;
+
+            border-left: 4px solid #3f7d58;
+
+            border-radius: 6px;
+
+            font-size: 12px;
+
+            color: #666;
+
+            line-height: 1.6;
+        }
+
+        .info-box strong {
+            color: #333;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 750px) {
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .home-btn {
+                margin-left: auto;
+            }
+
+        }
+
+        @media (max-width: 480px) {
+
+            .admin-card {
+                width: 100%;
+
+                padding: 30px 23px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar">
+
+        <img
+            src="logo.png"
+            alt="Food Recipe Logo"
+            class="logo"
+        >
+
+
+        <nav class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="recipes.html">
+                All Recipes
+            </a>
+
+            <a href="cuisines.html">
+                Cuisines
+            </a>
+
+            <a href="meal-planner.html">
+                Meal Planner
+            </a>
+
+        </nav>
+
+
+        <button
+            class="home-btn"
+            onclick="goHome()"
+        >
+            ← Home
+        </button>
+
+    </header>
+
+
+    <!-- ================= ADMIN LOGIN ================= -->
+
+    <main class="admin-section">
+
+        <div class="admin-card">
+
+
+            <!-- LOGO -->
+
+            <div class="logo-box">
+
+                <img
+                    src="logo.png"
+                    alt="Food Recipe"
+                >
+
+            </div>
+
+
+            <!-- ICON -->
+
+            <div class="admin-icon">
+                👨‍🍳
+            </div>
+
+
+            <!-- BADGE -->
+
+            <div class="admin-badge">
+                ADMIN PORTAL
+            </div>
+
+
+            <h1>
+                Admin Login
+            </h1>
+
+
+            <p class="subtitle">
+                Login to manage your Food Recipe application.
+            </p>
+
+
+            <!-- ================= FORM ================= -->
+
+            <form id="adminLoginForm">
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="adminEmail">
+                        Admin Email
+                    </label>
+
+
+                    <div class="input-box">
+
+                        <span>✉️</span>
+
+
+                        <input
+                            type="email"
+                            id="adminEmail"
+                            placeholder="Enter admin email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="adminPassword">
+                        Password
+                    </label>
+
+
+                    <div class="input-box">
+
+                        <span>🔒</span>
+
+
+                        <input
+                            type="password"
+                            id="adminPassword"
+                            placeholder="Enter admin password"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- LOGIN BUTTON -->
+
+                <button
+                    type="submit"
+                    class="admin-login-btn"
+                >
+                    Admin Login →
+                </button>
+
+
+                <!-- MESSAGE -->
+
+                <div
+                    id="message"
+                    class="message"
+                ></div>
+
+
+            </form>
+
+
+            <!-- USER LOGIN -->
+
+            <div class="back-user">
+
+                Are you a user?
+
+                <a href="login.html">
+                    User Login
+                </a>
+
+            </div>
+
+
+            <!-- ADMIN SIGNUP -->
+
+            <div class="create-admin">
+
+                Don't have an admin account?
+
+                <a href="admin-signup.html">
+                    Create Admin Account
+                </a>
+
+            </div>
+
+
+            <!-- INFORMATION -->
+
+            <div class="info-box">
+
+                <strong>Admin Account</strong><br>
+
+                Create your admin account using
+                <b>Create Admin Account</b>.
+                Your details will be stored in
+                LocalStorage for Review 1.
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+
+        const form =
+            document.getElementById("adminLoginForm");
+
+
+        const message =
+            document.getElementById("message");
+
+
+        /* ================= LOGIN ================= */
+
+        form.addEventListener(
+            "submit",
+            function(event) {
+
+                event.preventDefault();
+
+
+                /* Get entered details */
+
+                const email =
+                    document.getElementById(
+                        "adminEmail"
+                    )
+                    .value
+                    .trim();
+
+
+                const password =
+                    document.getElementById(
+                        "adminPassword"
+                    )
+                    .value;
+
+
+                /* Get admin account from LocalStorage */
+
+                const admin =
+                    JSON.parse(
+                        localStorage.getItem(
+                            "adminUser"
+                        )
+                    );
+
+
+                /* Check whether account exists */
+
+                if (!admin) {
+
+                    showMessage(
+                        "No admin account found. Please create an admin account first.",
+                        "error"
+                    );
+
+                    return;
+                }
+
+
+                /* Check email and password */
+
+                if (
+                    email === admin.email &&
+                    password === admin.password
+                ) {
+
+
+                    /* Save login status */
+
+                    localStorage.setItem(
+                        "adminLoggedIn",
+                        "true"
+                    );
+
+
+                    showMessage(
+                        "Admin login successful! Redirecting...",
+                        "success"
+                    );
+
+
+                    /* Redirect */
+
+                    setTimeout(
+                        function() {
+
+                            window.location.href =
+                                "admin-dashboard.html";
+
+                        },
+                        1000
+                    );
+
+
+                } else {
+
+                    showMessage(
+                        "Invalid admin email or password.",
+                        "error"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* ================= MESSAGE ================= */
+
+        function showMessage(
+            text,
+            type
+        ) {
+
+            message.textContent = text;
+
+            message.className =
+                "message " + type;
+
+            message.style.display =
+                "block";
+
+        }
+
+
+        /* ================= HOME ================= */
+
+        function goHome() {
+
+            window.location.href =
+                "index.html";
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

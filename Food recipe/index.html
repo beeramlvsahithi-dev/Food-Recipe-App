@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Food Recipe</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f8f8f8;
+            color: #171717;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 72px;
+            background: #292929;
+            display: flex;
+            align-items: center;
+            padding: 0 55px;
+            gap: 50px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            min-width: 185px;
+        }
+
+        .logo {
+            width: 150px;
+            height: 62px;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+            flex: 1;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff9f0a;
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .login-btn {
+            background: transparent;
+            border: 1px solid #ff9f0a;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .login-btn:hover {
+            background: #ff9f0a;
+            color: #222;
+        }
+
+        .admin-btn {
+            background: #3f7d58;
+            border: none;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .admin-btn:hover {
+            background: #326747;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            background: linear-gradient(135deg, #fff 0%, #fff8e8 100%);
+            padding: 55px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .small-title {
+            color: #e67e00;
+            font-size: 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            line-height: 1.15;
+            margin-bottom: 18px;
+            color: #171717;
+        }
+
+        .hero h1 span {
+            color: #ef7d00;
+        }
+
+        .hero p {
+            color: #666;
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        .explore-btn {
+            background: #f28c00;
+            border: none;
+            color: white;
+            padding: 14px 27px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .explore-btn:hover {
+            background: #d96f00;
+        }
+
+        .hero-image {
+            width: 420px;
+            height: 280px;
+            border-radius: 20px;
+            object-fit: cover;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        /* ================= SEARCH ================= */
+
+        .search-section {
+            padding: 30px 7%;
+            background: white;
+        }
+
+        .search-box {
+            max-width: 750px;
+            margin: auto;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 17px 55px 17px 22px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            font-size: 16px;
+            outline: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .search-box input:focus {
+            border-color: #f28c00;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 14px;
+            font-size: 22px;
+        }
+
+        /* ================= CATEGORIES ================= */
+
+        .categories {
+            padding: 35px 7%;
+        }
+
+        .section-title {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .section-subtitle {
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .category-list {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .category {
+            padding: 11px 20px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            background: white;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+        }
+
+        .category:hover,
+        .category.active {
+            background: #ffbd19;
+            border-color: #ffbd19;
+            color: #222;
+        }
+
+        /* ================= RECIPES ================= */
+
+        .recipes {
+            padding: 20px 7% 60px;
+        }
+
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+
+        .recipe-card {
+            background: white;
+            border: 1px solid #e4e4e4;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+            transition: 0.3s;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.13);
+        }
+
+        .image-container {
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .recipe-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.4s;
+        }
+
+        .recipe-card:hover .recipe-image {
+            transform: scale(1.05);
+        }
+
+        .chef-badge {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            background: #ef8a00;
+            color: white;
+            padding: 7px 13px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .chef-badge.green {
+            background: #159447;
+        }
+
+        .category-badge {
+            position: absolute;
+            bottom: 10px;
+            left: 12px;
+            background: #f3c51b;
+            color: #222;
+            padding: 7px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .recipe-content {
+            padding: 20px 18px;
+        }
+
+        .recipe-content h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .rating-time {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .rating {
+            color: #ef9800;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .time {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .tag {
+            display: inline-block;
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .nutrition {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px;
+            color: #777;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .view-btn {
+            width: 100%;
+            margin-top: 16px;
+            padding: 10px;
+            border: none;
+            background: #292929;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .view-btn:hover {
+            background: #ef8a00;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #292929;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        footer span {
+            color: #ff9f0a;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1000px) {
+
+            .navbar {
+                padding: 0 25px;
+                gap: 20px;
+            }
+
+            .nav-links {
+                gap: 18px;
+            }
+
+            .hero {
+                padding: 45px 5%;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero-image {
+                width: 350px;
+            }
+
+            .recipe-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                height: auto;
+                padding: 15px 20px;
+                flex-wrap: wrap;
+            }
+
+            .nav-links {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+                padding-top: 10px;
+            }
+
+            .nav-buttons {
+                margin-left: auto;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-image {
+                width: 100%;
+                max-width: 450px;
+            }
+
+            .recipe-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .categories,
+            .recipes,
+            .search-section {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+        }
+
+        @media (max-width: 450px) {
+
+            .nav-buttons {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .section-title {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar">
+
+        <div class="logo-area">
+            <img src="logo.png" alt="Food Recipe Logo" class="logo">
+        </div>
+
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="recipes.html">All Recipes</a>
+            <a href="cuisines.html">Cuisines</a>
+            <a href="meal-planner.html">Meal Planner</a>
+            <a href="favorites.html">Favorites</a>
+        </nav>
+
+        <div class="nav-buttons">
+            <button class="login-btn" onclick="goLogin()">Login</button>
+            <button class="admin-btn" onclick="goAdminLogin()">Admin</button>
+        </div>
+
+    </header>
+
+
+    <!-- ================= HERO ================= -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="small-title">
+                ✦ Discover • Cook • Enjoy
+            </div>
+
+            <h1>
+                Delicious Recipes<br>
+                Made <span>Simple.</span>
+            </h1>
+
+            <p>
+                Discover delicious recipes, explore new cuisines,
+                and find something amazing to cook every day.
+            </p>
+
+            <button class="explore-btn" onclick="goRecipes()">
+                Explore Recipes →
+            </button>
+
+        </div>
+
+        <img
+            class="hero-image"
+            src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80"
+            alt="Delicious Food">
+
+    </section>
+
+
+    <!-- ================= SEARCH ================= -->
+
+    <section class="search-section">
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="🔍  What are you craving today?"
+                onkeyup="searchRecipes()">
+
+            <span class="search-icon">🍴</span>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= CATEGORIES ================= -->
+
+    <section class="categories">
+
+        <h2 class="section-title">
+            Explore Cuisines
+        </h2>
+
+        <p class="section-subtitle">
+            Find recipes from your favorite cuisines.
+        </p>
+
+        <div class="category-list">
+
+            <div class="category active" onclick="filterCategory('all')">
+                🍽️ All
+            </div>
+
+            <div class="category" onclick="filterCategory('Indian')">
+                🇮🇳 Indian
+            </div>
+
+            <div class="category" onclick="filterCategory('Italian')">
+                🍕 Italian
+            </div>
+
+            <div class="category" onclick="filterCategory('Chinese')">
+                🥢 Chinese
+            </div>
+
+            <div class="category" onclick="filterCategory('Dessert')">
+                🍰 Desserts
+            </div>
+
+            <div class="category" onclick="filterCategory('Healthy')">
+                🥗 Healthy
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= RECIPES ================= -->
+
+    <section class="recipes">
+
+        <h2 class="section-title">
+            Featured Recipes
+        </h2>
+
+        <p class="section-subtitle">
+            Chef-curated recipes made for food lovers.
+        </p>
+
+
+        <div class="recipe-grid" id="recipeGrid">
+
+
+            <!-- RECIPE 1 -->
+
+            <div class="recipe-card" data-name="Butter Chicken" data-category="Indian">
+
+                <div class="image-container">
+
+                    <img
+                        class="recipe-image"
+                        src="https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80"
+                        alt="Butter Chicken">
+
+                    <span class="chef-badge green">
+                        Chef Pick
+                    </span>
+
+                    <span class="category-badge">
+                        Indian
+                    </span>
+
+                </div>
+
+                <div class="recipe-content">
+
+                    <h3>Butter Chicken</h3>
+
+                    <div class="rating-time">
+                        <span class="rating">★ 4.8</span>
+                        <span class="time">◷ 45 min</span>
+                    </div>
+
+                    <span class="tag">Indian</span>
+
+                    <div class="nutrition">
+                        <span>Calories: 450</span>
+                        <span>Protein: 35g</span>
+                        <span>Carbs: 12g</span>
+                        <span>Fat: 28g</span>
+                    </div>
+
+                    <button class="view-btn">
+                        View Recipe
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- RECIPE 2 -->
+
+            <div class="recipe-card" data-name="Vegetable Biryani" data-category="Indian">
+
+                <div class="image-container">
+
+                    <img
+                        class="recipe-image"
+                        src="https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=800&q=80"
+                        alt="Vegetable Biryani">
+
+                    <span class="chef-badge">
+                        Popular
+                    </span>
+
+                    <span class="category-badge">
+                        Indian
+                    </span>
+
+                </div>
+
+                <div class="recipe-content">
+
+                    <h3>Vegetable Biryani</h3>
+
+                    <div class="rating-time">
+                        <span class="rating">★ 4.9</span>
+                        <span class="time">◷ 60 min</span>
+                    </div>
+
+                    <span class="tag">Indian</span>
+
+                    <div class="nutrition">
+                        <span>Calories: 310</span>
+                        <span>Protein: 8g</span>
+                        <span>Carbs: 52g</span>
+                        <span>Fat: 9g</span>
+                    </div>
+
+                    <button class="view-btn">
+                        View Recipe
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- RECIPE 3 -->
+
+            <div class="recipe-card" data-name="Paneer Tikka Masala" data-category="Indian">
+
+                <div class="image-container">
+
+                    <img
+                        class="recipe-image"
+                        src="https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=800&q=80"
+                        alt="Paneer Tikka">
+
+                    <span class="chef-badge">
+                        Chef Pick
+                    </span>
+
+                    <span class="category-badge">
+                        Indian
+                    </span>
+
+                </div>
+
+                <div class="recipe-content">
+
+                    <h3>Paneer Tikka Masala</h3>
+
+                    <div class="rating-time">
+                        <span class="rating">★ 4.8</span>
+                        <span class="time">◷ 40 min</span>
+                    </div>
+
+                    <span class="tag">Indian</span>
+
+                    <div class="nutrition">
+                        <span>Calories: 360</span>
+                        <span>Protein: 18g</span>
+                        <span>Carbs: 12g</span>
+                        <span>Fat: 24g</span>
+                    </div>
+
+                    <button class="view-btn">
+                        View Recipe
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- RECIPE 4 -->
+
+            <div class="recipe-card" data-name="Creamy Pasta" data-category="Italian">
+
+                <div class="image-container">
+
+                    <img
+                        class="recipe-image"
+                        src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=800&q=80"
+                        alt="Creamy Pasta">
+
+                    <span class="chef-badge">
+                        Popular
+                    </span>
+
+                    <span class="category-badge">
+                        Italian
+                    </span>
+
+                </div>
+
+                <div class="recipe-content">
+
+                    <h3>Creamy Pasta</h3>
+
+                    <div class="rating-time">
+                        <span class="rating">★ 4.7</span>
+                        <span class="time">◷ 30 min</span>
+                    </div>
+
+                    <span class="tag">Italian</span>
+
+                    <div class="nutrition">
+                        <span>Calories: 420</span>
+                        <span>Protein: 15g</span>
+                        <span>Carbs: 55g</span>
+                        <span>Fat: 18g</span>
+                    </div>
+
+                    <button class="view-btn">
+                        View Recipe
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- RECIPE 5 -->
+
+            <div class="recipe-card" data-name="Vegetable Lasagna" data-category="Italian">
+
+                <div class="image-container">
+
+                    <img
+                        class="recipe-image"
+                        src="https://images.unsplash.com/photo-1574894709920-11b28e7367e3?auto=format&fit=crop&w=800&q=80"
+                        alt="Lasagna">
+
+                    <span class="chef-badge green">
+                        Vegetarian
+                    </span>
+
+                    <span class="category-badge">
+                        Italian
+                    </span>
+
+                </div>
+
+                <div class="recipe-content">
+
+                    <h3>Vegetable Lasagna</h3>
+
+                    <div class="rating-time">
+                        <span class="rating">★ 4.6</span>
+                        <span class="time">◷ 50 min</span>
+                    </div>
+
+                    <span class="tag">Italian</span>
+
+                    <div class="nutrition">
+                        <span>Calories: 390</span>
+                        <span>Protein: 17g</span>
+                        <span>Carbs: 45g</span>
+                        <span>Fat: 16g</span>
+                    </div>
+
+                    <button class="view-btn">
+                        View Recipe
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- RECIPE 6 -->
+
+            <div class="recipe-card" data-name="Chicken Noodles" data-category="Chinese">
+
+                <div class="image-container">
+
+                    <img
+                        class="recipe-image"
+                        src="https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=800&q=80"
+                        alt="Chicken Noodles">
+
+                    <span class="chef-badge">
+                        Popular
+                    </span>
+
+                    <span class="category-badge">
+                        Chinese
+                    </span>
+
+                </div>
+
+                <div class="recipe-content">
+
+                    <h3>Chicken Noodles</h3>
+
+                    <div class="rating-time">
+                        <span class="rating">★ 4.7</span>
+                        <span class="time">◷ 25 min</span>
+                    </div>
+
+                    <span class="tag">Chinese</span>
+
+                    <div class="nutrition">
+                        <span>Calories: 380</span>
+                        <span>Protein: 24g</span>
+                        <span>Carbs: 48g</span>
+                        <span>Fat: 12g</span>
+                    </div>
+
+                    <button class="view-btn">
+                        View Recipe
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <p>
+            © 2026 <span>Food Recipe</span> |
+            Cook something delicious today 🍴
+        </p>
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        function goLogin() {
+            window.location.href = "login.html";
+        }
+
+        function goAdminLogin() {
+            window.location.href = "admin-login.html";
+        }
+
+        function goRecipes() {
+            window.location.href = "recipes.html";
+        }
+
+
+        /* SEARCH */
+
+        function searchRecipes() {
+
+            let input =
+                document.getElementById("searchInput")
+                .value
+                .toLowerCase();
+
+            let cards =
+                document.querySelectorAll(".recipe-card");
+
+            cards.forEach(function(card) {
+
+                let name =
+                    card.dataset.name.toLowerCase();
+
+                if(name.includes(input)) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+
+            });
+
+        }
+
+
+        /* CATEGORY FILTER */
+
+        function filterCategory(category) {
+
+            let cards =
+                document.querySelectorAll(".recipe-card");
+
+            let buttons =
+                document.querySelectorAll(".category");
+
+            buttons.forEach(function(button) {
+                button.classList.remove("active");
+            });
+
+            event.target.classList.add("active");
+
+            cards.forEach(function(card) {
+
+                if(category === "all" ||
+                   card.dataset.category === category) {
+
+                    card.style.display = "block";
+
+                } else {
+
+                    card.style.display = "none";
+
+                }
+
+            });
+
+        }
+
+    </script>
+
+</body>
+</html>

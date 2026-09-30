@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Recipes | Food Recipe</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f8f8f8;
+            color: #222;
+        }
+
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 74px;
+            background: #292929;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 6%;
+            gap: 55px;
+        }
+
+
+        .logo {
+            width: 70px;
+            height: 68px;
+
+            object-fit: contain;
+            background: white;
+        }
+
+
+        .nav-links {
+            display: flex;
+            gap: 38px;
+            align-items: center;
+        }
+
+
+        .nav-links a {
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+
+        .nav-links a:hover,
+        .nav-links a.active,
+        .nav-links a.active-home {
+            color: #ff9800;
+        }
+
+
+        .nav-right {
+            margin-left: auto;
+        }
+
+
+        .logout-btn {
+            background: #ff7600;
+
+            color: white;
+
+            border: none;
+
+            padding: 11px 22px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        .logout-btn:hover {
+            background: #e86500;
+        }
+
+
+        /* ================= PAGE HEADER ================= */
+
+        .page-header {
+            background: linear-gradient(
+                110deg,
+                #fff8eb,
+                #ffffff
+            );
+
+            padding: 55px 7% 45px;
+        }
+
+
+        .small-title {
+            color: #f18700;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .page-header h1 {
+            font-size: 42px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .page-header h1 span {
+            color: #f18700;
+        }
+
+
+        .page-header p {
+            color: #666;
+
+            font-size: 17px;
+
+            max-width: 700px;
+
+            line-height: 1.6;
+        }
+
+
+        /* ================= SEARCH ================= */
+
+        .search-area {
+            padding: 25px 7%;
+
+            background: white;
+        }
+
+
+        .search-box {
+            max-width: 750px;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            border: 1px solid #ddd;
+
+            border-radius: 30px;
+
+            padding: 13px 22px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.06);
+        }
+
+
+        .search-box span {
+            font-size: 22px;
+
+            margin-right: 12px;
+        }
+
+
+        .search-box input {
+            width: 100%;
+
+            border: none;
+
+            outline: none;
+
+            font-size: 16px;
+        }
+
+
+        /* ================= CUISINES ================= */
+
+        .cuisine-section {
+            padding: 35px 7% 10px;
+        }
+
+
+        .cuisine-section h2 {
+            font-size: 30px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .cuisine-section p {
+            color: #777;
+
+            margin-bottom: 20px;
+        }
+
+
+        .cuisine-buttons {
+            display: flex;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .cuisine-btn {
+            background: white;
+
+            border: 1px solid #ddd;
+
+            padding: 11px 22px;
+
+            border-radius: 25px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            font-size: 15px;
+        }
+
+
+        .cuisine-btn:hover,
+        .cuisine-btn.active {
+            background: #ff9800;
+
+            color: white;
+
+            border-color: #ff9800;
+        }
+
+
+        /* ================= RECIPES ================= */
+
+        .recipes-section {
+            padding: 35px 7% 70px;
+        }
+
+
+        .recipes-title {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+        }
+
+
+        .recipes-title h2 {
+            font-size: 30px;
+        }
+
+
+        .recipe-count {
+            color: #777;
+        }
+
+
+        .recipe-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 28px;
+        }
+
+
+        /* ================= RECIPE CARD ================= */
+
+        .recipe-card {
+            background: white;
+
+            border-radius: 14px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,0.08);
+
+            transition: 0.3s;
+
+            position: relative;
+        }
+
+
+        .recipe-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 10px 28px rgba(0,0,0,0.13);
+        }
+
+
+        .recipe-image {
+            width: 100%;
+
+            height: 220px;
+
+            object-fit: cover;
+        }
+
+
+        /* ================= FAVORITE BUTTON ================= */
+
+        .favorite-btn {
+            position: absolute;
+
+            top: 15px;
+            right: 15px;
+
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+
+            border: none;
+
+            background: white;
+
+            font-size: 23px;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 3px 12px rgba(0,0,0,0.15);
+
+            transition: 0.2s;
+
+            z-index: 5;
+        }
+
+
+        .favorite-btn:hover {
+            transform: scale(1.1);
+        }
+
+
+        /* FAVORITE SELECTED */
+
+        .favorite-btn.active {
+            color: #ff2f2f;
+            background: #ffe7e7;
+            transform: scale(1.08);
+            font-weight: bold;
+        }
+
+        .favorite-btn.active:hover {
+            transform: scale(1.12);
+        }
+
+
+        .recipe-content {
+            padding: 20px;
+        }
+
+
+        .cuisine-tag {
+            display: inline-block;
+
+            background: #fff0da;
+
+            color: #e87b00;
+
+            padding: 5px 11px;
+
+            border-radius: 15px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            margin-bottom: 10px;
+        }
+
+
+        .recipe-content h3 {
+            font-size: 21px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .recipe-description {
+            color: #777;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            margin-bottom: 15px;
+        }
+
+
+        .recipe-info {
+            display: flex;
+
+            justify-content: space-between;
+
+            color: #666;
+
+            font-size: 13px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .rating {
+            color: #f39a00;
+
+            font-weight: bold;
+        }
+
+
+        .view-btn {
+            width: 100%;
+
+            background: #ff9800;
+
+            color: white;
+
+            border: none;
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        .view-btn:hover {
+            background: #e87d00;
+        }
+
+
+        /* ================= NO RESULTS ================= */
+
+        .no-results {
+            display: none;
+
+            text-align: center;
+
+            background: white;
+
+            padding: 50px;
+
+            border-radius: 15px;
+
+            color: #777;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #292929;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 25px;
+
+            margin-top: 20px;
+        }
+
+
+        footer span {
+            color: #ff9800;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media(max-width: 1000px) {
+
+            .recipe-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .navbar {
+                gap: 25px;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+        }
+
+
+        @media(max-width: 700px) {
+
+            .navbar {
+                height: auto;
+
+                padding: 12px 5%;
+
+                flex-wrap: wrap;
+            }
+
+
+            .nav-links {
+                order: 3;
+
+                width: 100%;
+
+                justify-content: center;
+
+                padding-bottom: 8px;
+            }
+
+
+            .recipe-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .page-header h1 {
+                font-size: 32px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <img
+        src="logo.png"
+        class="logo"
+        alt="Food Recipe Logo"
+    >
+
+
+    <div class="nav-links">
+
+        <a href="recipes.html" class="active-home">
+            Home
+        </a>
+
+        <a
+            href="recipes.html"
+            class="active"
+        >
+            Recipes
+        </a>
+
+        <a
+            href="#"
+            onclick="showFavorites(); return false;"
+        >
+            Favorites
+        </a>
+
+    </div>
+
+
+    <div class="nav-right">
+
+        <button
+            class="logout-btn"
+            onclick="logout()"
+        >
+            Logout
+        </button>
+
+    </div>
+
+</nav>
+
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="page-header">
+
+    <div class="small-title">
+        ✦ DISCOVER • COOK • ENJOY
+    </div>
+
+
+    <h1>
+        Explore <span>Delicious Recipes</span>
+    </h1>
+
+
+    <p>
+        Discover easy-to-follow recipes from different
+        cuisines and learn how to prepare your favorite
+        foods step by step.
+    </p>
+
+</header>
+
+
+
+<!-- ================= SEARCH ================= -->
+
+<section class="search-area">
+
+    <div class="search-box">
+
+        <span>🔍</span>
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search for a recipe... e.g. Biryani"
+            onkeyup="searchRecipes()"
+        >
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= CUISINES ================= -->
+
+<section class="cuisine-section">
+
+    <h2>
+        Choose Your Cuisine
+    </h2>
+
+    <p>
+        Select a cuisine to discover recipes.
+    </p>
+
+
+    <div class="cuisine-buttons">
+
+        <button
+            class="cuisine-btn active"
+            onclick="filterCuisine('All', this)"
+        >
+            🍽️ All
+        </button>
+
+
+        <button
+            class="cuisine-btn"
+            onclick="filterCuisine('Indian', this)"
+        >
+            🇮🇳 Indian
+        </button>
+
+
+        <button
+            class="cuisine-btn"
+            onclick="filterCuisine('Italian', this)"
+        >
+            🍕 Italian
+        </button>
+
+
+        <button
+            class="cuisine-btn"
+            onclick="filterCuisine('Chinese', this)"
+        >
+            🥡 Chinese
+        </button>
+
+
+        <button
+            class="cuisine-btn"
+            onclick="filterCuisine('Desserts', this)"
+        >
+            🍰 Desserts
+        </button>
+
+
+        <button
+            class="cuisine-btn"
+            onclick="filterCuisine('Healthy', this)"
+        >
+            🥗 Healthy
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= RECIPES ================= -->
+
+<section class="recipes-section">
+
+    <div class="recipes-title">
+
+        <div>
+
+            <h2>
+                Popular Recipes
+            </h2>
+
+            <span
+                class="recipe-count"
+                id="recipeCount"
+            >
+                6 recipes
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="recipe-grid"
+        id="recipeGrid"
+    >
+
+
+        <!-- ================= BUTTER CHICKEN ================= -->
+
+        <div
+            class="recipe-card"
+            data-cuisine="Indian"
+            data-name="Butter Chicken"
+        >
+
+            <img
+                class="recipe-image"
+                src="https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=900&q=80"
+                alt="Butter Chicken"
+            >
+
+
+            <button
+                class="favorite-btn"
+                data-recipe="Butter Chicken"
+                aria-label="Add Butter Chicken to favorites"
+                aria-pressed="false"
+                onclick="toggleFavorite('Butter Chicken', this)"
+            >
+                ♡
+            </button>
+
+
+            <div class="recipe-content">
+
+                <span class="cuisine-tag">
+                    Indian
+                </span>
+
+
+                <h3>
+                    Butter Chicken
+                </h3>
+
+
+                <p class="recipe-description">
+                    Creamy and flavorful Indian chicken
+                    curry prepared with tomato, butter
+                    and aromatic spices.
+                </p>
+
+
+                <div class="recipe-info">
+
+                    <span class="rating">
+                        ⭐ 4.8
+                    </span>
+
+                    <span>
+                        ⏱ 45 min
+                    </span>
+
+                    <span>
+                        👥 4
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="view-btn"
+                    onclick="viewRecipe('Butter Chicken')"
+                >
+                    View Recipe →
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= VEGETABLE BIRYANI ================= -->
+
+        <div
+            class="recipe-card"
+            data-cuisine="Indian"
+            data-name="Vegetable Biryani"
+        >
+
+            <img
+                class="recipe-image"
+                src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=900&q=80"
+                alt="Vegetable Biryani"
+            >
+
+
+            <button
+                class="favorite-btn"
+                data-recipe="Vegetable Biryani"
+                aria-label="Add Vegetable Biryani to favorites"
+                aria-pressed="false"
+                onclick="toggleFavorite('Vegetable Biryani', this)"
+            >
+                ♡
+            </button>
+
+
+            <div class="recipe-content">
+
+                <span class="cuisine-tag">
+                    Indian
+                </span>
+
+
+                <h3>
+                    Vegetable Biryani
+                </h3>
+
+
+                <p class="recipe-description">
+                    Fragrant basmati rice cooked with
+                    fresh vegetables and delicious
+                    Indian spices.
+                </p>
+
+
+                <div class="recipe-info">
+
+                    <span class="rating">
+                        ⭐ 4.9
+                    </span>
+
+                    <span>
+                        ⏱ 60 min
+                    </span>
+
+                    <span>
+                        👥 4
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="view-btn"
+                    onclick="viewRecipe('Vegetable Biryani')"
+                >
+                    View Recipe →
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= PANEER TIKKA ================= -->
+
+        <div
+            class="recipe-card"
+            data-cuisine="Indian"
+            data-name="Paneer Tikka Masala"
+        >
+
+            <img
+                class="recipe-image"
+                src="https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=900&q=80"
+                alt="Paneer Tikka Masala"
+            >
+
+
+            <button
+                class="favorite-btn"
+                data-recipe="Paneer Tikka Masala"
+                aria-label="Add Paneer Tikka Masala to favorites"
+                aria-pressed="false"
+                onclick="toggleFavorite('Paneer Tikka Masala', this)"
+            >
+                ♡
+            </button>
+
+
+            <div class="recipe-content">
+
+                <span class="cuisine-tag">
+                    Indian
+                </span>
+
+
+                <h3>
+                    Paneer Tikka Masala
+                </h3>
+
+
+                <p class="recipe-description">
+                    Soft paneer cooked in a rich,
+                    creamy tomato masala with
+                    aromatic spices.
+                </p>
+
+
+                <div class="recipe-info">
+
+                    <span class="rating">
+                        ⭐ 4.8
+                    </span>
+
+                    <span>
+                        ⏱ 40 min
+                    </span>
+
+                    <span>
+                        👥 3
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="view-btn"
+                    onclick="viewRecipe('Paneer Tikka Masala')"
+                >
+                    View Recipe →
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= CREAMY PASTA ================= -->
+
+        <div
+            class="recipe-card"
+            data-cuisine="Italian"
+            data-name="Creamy Pasta"
+        >
+
+            <img
+                class="recipe-image"
+                src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=900&q=80"
+                alt="Creamy Pasta"
+            >
+
+
+            <button
+                class="favorite-btn"
+                data-recipe="Creamy Pasta"
+                aria-label="Add Creamy Pasta to favorites"
+                aria-pressed="false"
+                onclick="toggleFavorite('Creamy Pasta', this)"
+            >
+                ♡
+            </button>
+
+
+            <div class="recipe-content">
+
+                <span class="cuisine-tag">
+                    Italian
+                </span>
+
+
+                <h3>
+                    Creamy Pasta
+                </h3>
+
+
+                <p class="recipe-description">
+                    Delicious creamy pasta prepared
+                    with garlic, herbs, cheese and
+                    fresh vegetables.
+                </p>
+
+
+                <div class="recipe-info">
+
+                    <span class="rating">
+                        ⭐ 4.7
+                    </span>
+
+                    <span>
+                        ⏱ 30 min
+                    </span>
+
+                    <span>
+                        👥 2
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="view-btn"
+                    onclick="viewRecipe('Creamy Pasta')"
+                >
+                    View Recipe →
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= VEGETABLE FRIED RICE ================= -->
+
+        <div
+            class="recipe-card"
+            data-cuisine="Chinese"
+            data-name="Vegetable Fried Rice"
+        >
+
+            <img
+                class="recipe-image"
+                src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=900&q=80"
+                alt="Vegetable Fried Rice"
+            >
+
+
+            <button
+                class="favorite-btn"
+                data-recipe="Vegetable Fried Rice"
+                aria-label="Add Vegetable Fried Rice to favorites"
+                aria-pressed="false"
+                onclick="toggleFavorite('Vegetable Fried Rice', this)"
+            >
+                ♡
+            </button>
+
+
+            <div class="recipe-content">
+
+                <span class="cuisine-tag">
+                    Chinese
+                </span>
+
+
+                <h3>
+                    Vegetable Fried Rice
+                </h3>
+
+
+                <p class="recipe-description">
+                    Quick and tasty fried rice made
+                    with fresh vegetables, soy sauce
+                    and aromatic seasonings.
+                </p>
+
+
+                <div class="recipe-info">
+
+                    <span class="rating">
+                        ⭐ 4.6
+                    </span>
+
+                    <span>
+                        ⏱ 25 min
+                    </span>
+
+                    <span>
+                        👥 3
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="view-btn"
+                    onclick="viewRecipe('Vegetable Fried Rice')"
+                >
+                    View Recipe →
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= HEALTHY SALAD ================= -->
+
+        <div
+            class="recipe-card"
+            data-cuisine="Healthy"
+            data-name="Healthy Salad"
+        >
+
+            <img
+                class="recipe-image"
+                src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80"
+                alt="Healthy Salad"
+            >
+
+
+            <button
+                class="favorite-btn"
+                data-recipe="Healthy Salad"
+                aria-label="Add Healthy Salad to favorites"
+                aria-pressed="false"
+                onclick="toggleFavorite('Healthy Salad', this)"
+            >
+                ♡
+            </button>
+
+
+            <div class="recipe-content">
+
+                <span class="cuisine-tag">
+                    Healthy
+                </span>
+
+
+                <h3>
+                    Healthy Salad
+                </h3>
+
+
+                <p class="recipe-description">
+                    Fresh and nutritious salad made
+                    with vegetables, greens, nuts
+                    and a light dressing.
+                </p>
+
+
+                <div class="recipe-info">
+
+                    <span class="rating">
+                        ⭐ 4.8
+                    </span>
+
+                    <span>
+                        ⏱ 15 min
+                    </span>
+
+                    <span>
+                        👥 2
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="view-btn"
+                    onclick="viewRecipe('Healthy Salad')"
+                >
+                    View Recipe →
+                </button>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- NO RESULTS -->
+
+    <div
+        class="no-results"
+        id="noResults"
+    >
+
+        <h3>
+            🍽️ No recipes found
+        </h3>
+
+        <p>
+            Try another recipe name or cuisine.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+        © 2026 <span>Food Recipe</span>.
+        Discover • Cook • Enjoy.
+    </p>
+
+</footer>
+
+
+
+<script>
+
+    let selectedCuisine = "All";
+
+
+    /* ================= SEARCH ================= */
+
+    function searchRecipes() {
+
+        const search =
+            document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase()
+            .trim();
+
+        filterRecipes(search, selectedCuisine);
+
+    }
+
+
+    /* ================= CUISINE FILTER ================= */
+
+    function filterCuisine(cuisine, button) {
+
+        selectedCuisine = cuisine;
+
+
+        document
+            .querySelectorAll(".cuisine-btn")
+            .forEach(function(btn) {
+
+                btn.classList.remove("active");
+
+            });
+
+
+        button.classList.add("active");
+
+
+        const search =
+            document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase()
+            .trim();
+
+
+        filterRecipes(search, cuisine);
+
+    }
+
+
+    /* ================= FILTER RECIPES ================= */
+
+    function filterRecipes(search, cuisine) {
+
+        const cards =
+            document.querySelectorAll(".recipe-card");
+
+        let count = 0;
+
+
+        cards.forEach(function(card) {
+
+            const name =
+                card.dataset.name.toLowerCase();
+
+
+            const cardCuisine =
+                card.dataset.cuisine;
+
+
+            const matchesSearch =
+                name.includes(search);
+
+
+            const matchesCuisine =
+                cuisine === "All" ||
+                cardCuisine === cuisine;
+
+
+            if (
+                matchesSearch &&
+                matchesCuisine
+            ) {
+
+                card.style.display = "block";
+
+                count++;
+
+            } else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+
+        document
+            .getElementById("recipeCount")
+            .textContent =
+            count + " recipes";
+
+
+        document
+            .getElementById("noResults")
+            .style.display =
+            count === 0
+                ? "block"
+                : "none";
+
+    }
+
+
+    /* ================= FAVORITES ================= */
+
+    function toggleFavorite(recipeName, button) {
+
+        let favorites =
+            JSON.parse(
+                localStorage.getItem("favorites")
+            ) || [];
+
+
+        const index =
+            favorites.indexOf(recipeName);
+
+
+        if (index === -1) {
+
+            favorites.push(recipeName);
+
+            button.textContent = "♥";
+            button.classList.add("active");
+
+            button.setAttribute(
+                "aria-label",
+                "Remove " + recipeName + " from favorites"
+            );
+
+            button.setAttribute(
+                "aria-pressed",
+                "true"
+            );
+
+        } else {
+
+            favorites.splice(index, 1);
+
+            button.textContent = "♡";
+            button.classList.remove("active");
+
+            button.setAttribute(
+                "aria-label",
+                "Add " + recipeName + " to favorites"
+            );
+
+            button.setAttribute(
+                "aria-pressed",
+                "false"
+            );
+
+        }
+
+
+        localStorage.setItem(
+            "favorites",
+            JSON.stringify(favorites)
+        );
+
+    }
+
+
+    /* ================= LOAD FAVORITES ================= */
+
+    function loadFavorites() {
+
+        const favorites =
+            JSON.parse(
+                localStorage.getItem("favorites")
+            ) || [];
+
+
+        document
+            .querySelectorAll(".favorite-btn")
+            .forEach(function(button) {
+
+                const recipeName =
+                    button.dataset.recipe;
+
+
+                if (favorites.includes(recipeName)) {
+
+                    button.textContent = "♥";
+                    button.classList.add("active");
+
+                    button.setAttribute(
+                        "aria-label",
+                        "Remove " + recipeName + " from favorites"
+                    );
+
+                    button.setAttribute(
+                        "aria-pressed",
+                        "true"
+                    );
+
+                } else {
+
+                    button.textContent = "♡";
+                    button.classList.remove("active");
+
+                    button.setAttribute(
+                        "aria-label",
+                        "Add " + recipeName + " to favorites"
+                    );
+
+                    button.setAttribute(
+                        "aria-pressed",
+                        "false"
+                    );
+
+                }
+
+            });
+
+    }
+
+
+    /* ================= SHOW FAVORITES ================= */
+
+    function showFavorites() {
+
+        const favorites =
+            JSON.parse(
+                localStorage.getItem("favorites")
+            ) || [];
+
+
+        const cards =
+            document.querySelectorAll(".recipe-card");
+
+
+        let count = 0;
+
+
+        cards.forEach(function(card) {
+
+            const recipeName =
+                card.dataset.name;
+
+
+            if (
+                favorites.includes(recipeName)
+            ) {
+
+                card.style.display = "block";
+
+                count++;
+
+            } else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+
+        document
+            .getElementById("recipeCount")
+            .textContent =
+            count + " favorite recipes";
+
+
+        document
+            .getElementById("noResults")
+            .style.display =
+            count === 0
+                ? "block"
+                : "none";
+
+
+        if (count === 0) {
+
+            document
+                .getElementById("noResults")
+                .innerHTML = `
+                    <h3>❤️ No Favorite Recipes</h3>
+                    <p>Click the ♡ button on a recipe to add it to Favorites.</p>
+                `;
+
+        }
+
+    }
+
+
+    /* ================= VIEW RECIPE ================= */
+
+    function viewRecipe(recipeName) {
+
+        localStorage.setItem(
+            "selectedRecipe",
+            recipeName
+        );
+
+
+        window.location.href =
+            "recipe-details.html";
+
+    }
+
+
+    /* ================= LOGOUT ================= */
+
+    function logout() {
+
+        localStorage.removeItem(
+            "userLoggedIn"
+        );
+
+
+        localStorage.removeItem(
+            "currentUser"
+        );
+
+
+        window.location.href =
+            "login.html";
+
+    }
+
+
+    /* ================= PAGE LOAD ================= */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function() {
+
+            loadFavorites();
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

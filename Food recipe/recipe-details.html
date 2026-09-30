@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Recipe Details | Food Recipe</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f8f8f8;
+            color: #222;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 74px;
+            background: #292929;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 6%;
+            gap: 50px;
+        }
+
+        .logo {
+            width: 70px;
+            height: 68px;
+
+            object-fit: contain;
+
+            background: white;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            color: #ff9800;
+        }
+
+        .back-btn {
+            margin-left: auto;
+
+            background: transparent;
+            color: white;
+
+            border: 1px solid #ff9800;
+
+            padding: 10px 18px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+        }
+
+        .back-btn:hover {
+            background: #ff9800;
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .container {
+            width: 86%;
+            max-width: 1200px;
+
+            margin: 45px auto;
+        }
+
+
+        /* ================= RECIPE HERO ================= */
+
+        .recipe-hero {
+            background: white;
+
+            border-radius: 18px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.08);
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .recipe-image {
+            width: 100%;
+            height: 430px;
+
+            object-fit: cover;
+        }
+
+        .recipe-info {
+            padding: 45px;
+        }
+
+        .tag {
+            display: inline-block;
+
+            background: #fff0da;
+            color: #e87b00;
+
+            padding: 7px 13px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            margin-bottom: 15px;
+        }
+
+        .recipe-info h1 {
+            font-size: 40px;
+
+            margin-bottom: 15px;
+        }
+
+        .description {
+            color: #666;
+
+            font-size: 16px;
+
+            line-height: 1.7;
+
+            margin-bottom: 25px;
+        }
+
+
+        /* ================= RECIPE STATS ================= */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 12px;
+
+            margin-bottom: 25px;
+        }
+
+        .stat {
+            background: #fff8eb;
+
+            padding: 15px;
+
+            border-radius: 10px;
+
+            text-align: center;
+        }
+
+        .stat strong {
+            display: block;
+
+            color: #e87b00;
+
+            font-size: 18px;
+
+            margin-bottom: 5px;
+        }
+
+        .stat span {
+            font-size: 12px;
+
+            color: #777;
+        }
+
+        .rating {
+            color: #f39a00;
+
+            font-weight: bold;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* ================= FAVORITE ================= */
+
+        .favorite-btn {
+            background: white;
+
+            color: #e53935;
+
+            border: 1px solid #ddd;
+
+            padding: 11px 20px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+            font-size: 14px;
+        }
+
+        .favorite-btn:hover {
+            background: #fff0f0;
+        }
+
+
+        /* ================= CONTENT ================= */
+
+        .content-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                0.8fr 1.5fr;
+
+            gap: 30px;
+
+            margin-top: 30px;
+        }
+
+
+        .content-card {
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,0.06);
+        }
+
+        .content-card h2 {
+            font-size: 26px;
+
+            margin-bottom: 20px;
+
+            color: #222;
+        }
+
+
+        /* ================= INGREDIENTS ================= */
+
+        .ingredients {
+            list-style: none;
+        }
+
+        .ingredients li {
+            padding: 12px 0;
+
+            border-bottom: 1px solid #eee;
+
+            color: #555;
+
+            font-size: 15px;
+        }
+
+        .ingredients li::before {
+            content: "✓";
+
+            color: #ff9800;
+
+            font-weight: bold;
+
+            margin-right: 10px;
+        }
+
+
+        /* ================= STEPS ================= */
+
+        .step {
+            display: flex;
+
+            gap: 15px;
+
+            margin-bottom: 22px;
+        }
+
+        .step-number {
+
+            min-width: 38px;
+            height: 38px;
+
+            background: #ff9800;
+
+            color: white;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+        }
+
+        .step-text {
+            color: #555;
+
+            line-height: 1.6;
+
+            font-size: 15px;
+        }
+
+
+        /* ================= TIP ================= */
+
+        .cooking-tip {
+
+            background: #fff8eb;
+
+            border-left: 5px solid #ff9800;
+
+            padding: 18px;
+
+            margin-top: 25px;
+
+            border-radius: 8px;
+
+            color: #555;
+
+            line-height: 1.6;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+
+            background: #292929;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 25px;
+
+            margin-top: 50px;
+        }
+
+        footer span {
+            color: #ff9800;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media(max-width: 850px) {
+
+            .recipe-hero {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .recipe-image {
+
+                height: 300px;
+
+            }
+
+            .content-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .nav-links {
+
+                gap: 15px;
+
+            }
+
+        }
+
+
+        @media(max-width: 600px) {
+
+            .navbar {
+
+                padding: 10px 4%;
+
+                height: auto;
+
+                flex-wrap: wrap;
+
+            }
+
+            .nav-links {
+
+                order: 3;
+
+                width: 100%;
+
+                justify-content: center;
+
+                padding-bottom: 8px;
+
+            }
+
+            .recipe-info {
+
+                padding: 25px;
+
+            }
+
+            .recipe-info h1 {
+
+                font-size: 30px;
+
+            }
+
+            .stats {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <img
+        src="logo.png"
+        class="logo"
+        alt="Food Recipe Logo"
+    >
+
+    <div class="nav-links">
+
+        <a href="customer-dashboard.html">
+            Home
+        </a>
+
+        <a href="recipes.html">
+            Recipes
+        </a>
+
+        <a href="customer-dashboard.html#favorites">
+            Favorites
+        </a>
+
+    </div>
+
+    <button
+        class="back-btn"
+        onclick="goBack()">
+
+        ← Back to Recipes
+
+    </button>
+
+</nav>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+
+    <!-- RECIPE HERO -->
+
+    <section class="recipe-hero">
+
+        <img
+            id="recipeImage"
+            class="recipe-image"
+            src=""
+            alt="Recipe"
+        >
+
+
+        <div class="recipe-info">
+
+            <span
+                id="recipeCuisine"
+                class="tag">
+                Indian
+            </span>
+
+
+            <h1 id="recipeName">
+                Butter Chicken
+            </h1>
+
+
+            <p
+                id="recipeDescription"
+                class="description">
+
+                A creamy and flavorful Indian chicken
+                curry made with tomato, butter and
+                aromatic spices.
+
+            </p>
+
+
+            <div class="rating">
+                ⭐ <span id="recipeRating">4.8</span>
+                / 5
+            </div>
+
+
+            <div class="stats">
+
+                <div class="stat">
+
+                    <strong id="recipeTime">
+                        45 min
+                    </strong>
+
+                    <span>
+                        Cooking Time
+                    </span>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <strong id="recipeServings">
+                        4
+                    </strong>
+
+                    <span>
+                        Servings
+                    </span>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <strong id="recipeDifficulty">
+                        Medium
+                    </strong>
+
+                    <span>
+                        Difficulty
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="favorite-btn"
+                onclick="addFavorite()">
+
+                ♡ Add to Favorites
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= INGREDIENTS + STEPS ================= -->
+
+    <section class="content-grid">
+
+
+        <!-- INGREDIENTS -->
+
+        <div class="content-card">
+
+            <h2>
+                🧂 Ingredients
+            </h2>
+
+            <ul
+                id="ingredients"
+                class="ingredients">
+
+                <li>500g chicken</li>
+
+                <li>2 tablespoons butter</li>
+
+                <li>2 tomatoes</li>
+
+                <li>1 onion</li>
+
+                <li>1 tablespoon ginger-garlic paste</li>
+
+                <li>1/2 cup fresh cream</li>
+
+                <li>1 teaspoon turmeric</li>
+
+                <li>1 teaspoon chilli powder</li>
+
+                <li>1 teaspoon garam masala</li>
+
+                <li>Salt as required</li>
+
+                <li>Fresh coriander</li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- COOKING STEPS -->
+
+        <div class="content-card">
+
+            <h2>
+                👨‍🍳 Cooking Instructions
+            </h2>
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    1
+                </div>
+
+                <p class="step-text">
+
+                    Wash the chicken and marinate it
+                    with turmeric, chilli powder,
+                    salt and ginger-garlic paste.
+
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    2
+                </div>
+
+                <p class="step-text">
+
+                    Heat butter in a pan and cook
+                    the marinated chicken until
+                    lightly browned.
+
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    3
+                </div>
+
+                <p class="step-text">
+
+                    Add chopped onions and cook
+                    until they become soft and
+                    golden brown.
+
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    4
+                </div>
+
+                <p class="step-text">
+
+                    Add tomato puree and cook the
+                    mixture until the oil starts
+                    separating from the masala.
+
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    5
+                </div>
+
+                <p class="step-text">
+
+                    Add the cooked chicken and
+                    garam masala. Mix everything
+                    well.
+
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    6
+                </div>
+
+                <p class="step-text">
+
+                    Add fresh cream and simmer on
+                    low heat for about 5 minutes.
+
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-number">
+                    7
+                </div>
+
+                <p class="step-text">
+
+                    Garnish with fresh coriander
+                    and serve hot with rice,
+                    naan or roti.
+
+                </p>
+
+            </div>
+
+
+            <div class="cooking-tip">
+
+                💡 <strong>Cooking Tip:</strong>
+
+                Cook the tomato masala properly
+                before adding the cream. This gives
+                the curry a richer flavor.
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+
+        © 2026
+        <span>Food Recipe</span>.
+
+        Discover • Cook • Enjoy.
+
+    </p>
+
+</footer>
+
+
+
+<script>
+
+    /* =========================================
+       RECIPE DATA
+    ========================================= */
+
+    const recipes = {
+
+        "Butter Chicken": {
+
+            cuisine: "Indian",
+
+            image:
+            "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=1000&q=80",
+
+            description:
+            "A creamy and flavorful Indian chicken curry made with tomato, butter and aromatic spices.",
+
+            rating: "4.8",
+
+            time: "45 min",
+
+            servings: "4",
+
+            difficulty: "Medium",
+
+            ingredients: [
+
+                "500g chicken",
+                "2 tablespoons butter",
+                "2 tomatoes",
+                "1 onion",
+                "1 tablespoon ginger-garlic paste",
+                "1/2 cup fresh cream",
+                "1 teaspoon turmeric",
+                "1 teaspoon chilli powder",
+                "1 teaspoon garam masala",
+                "Salt as required",
+                "Fresh coriander"
+
+            ],
+
+            steps: [
+
+                "Wash the chicken and marinate it with turmeric, chilli powder, salt and ginger-garlic paste.",
+
+                "Heat butter in a pan and cook the marinated chicken until lightly browned.",
+
+                "Add chopped onions and cook until they become soft and golden brown.",
+
+                "Add tomato puree and cook until the oil starts separating from the masala.",
+
+                "Add the cooked chicken and garam masala. Mix everything well.",
+
+                "Add fresh cream and simmer on low heat for about 5 minutes.",
+
+                "Garnish with fresh coriander and serve hot with rice, naan or roti."
+
+            ]
+
+        },
+
+
+        "Vegetable Biryani": {
+
+            cuisine: "Indian",
+
+            image:
+            "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?auto=format&fit=crop&w=1000&q=80",
+
+            description:
+            "Fragrant basmati rice cooked with fresh vegetables and delicious Indian spices.",
+
+            rating: "4.9",
+
+            time: "60 min",
+
+            servings: "4",
+
+            difficulty: "Medium",
+
+            ingredients: [
+
+                "2 cups basmati rice",
+                "1 cup mixed vegetables",
+                "1 onion",
+                "2 tomatoes",
+                "1 tablespoon ginger-garlic paste",
+                "2 tablespoons oil",
+                "Biryani masala",
+                "Mint leaves",
+                "Coriander leaves",
+                "Salt as required"
+
+            ],
+
+            steps: [
+
+                "Wash and soak the basmati rice for about 20 minutes.",
+
+                "Heat oil in a large pan and fry the sliced onions until golden.",
+
+                "Add ginger-garlic paste and chopped tomatoes.",
+
+                "Add the mixed vegetables and biryani spices.",
+
+                "Add soaked rice and the required amount of water.",
+
+                "Cover the pan and cook on low heat until the rice is completely cooked.",
+
+                "Garnish with mint and coriander and serve hot."
+
+            ]
+
+        },
+
+
+        "Paneer Tikka Masala": {
+
+            cuisine: "Indian",
+
+            image:
+            "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=1000&q=80",
+
+            description:
+            "Soft paneer cooked in a rich creamy tomato masala with aromatic spices.",
+
+            rating: "4.8",
+
+            time: "40 min",
+
+            servings: "3",
+
+            difficulty: "Medium",
+
+            ingredients: [
+
+                "250g paneer",
+                "2 tomatoes",
+                "1 onion",
+                "1/2 cup cream",
+                "1 tablespoon butter",
+                "Ginger-garlic paste",
+                "Garam masala",
+                "Chilli powder",
+                "Turmeric",
+                "Salt"
+
+            ],
+
+            steps: [
+
+                "Cut paneer into small cubes and lightly fry them.",
+
+                "Heat butter and sauté chopped onions.",
+
+                "Add ginger-garlic paste and tomato puree.",
+
+                "Add turmeric, chilli powder and garam masala.",
+
+                "Cook the masala until the oil separates.",
+
+                "Add paneer and cream.",
+
+                "Simmer for a few minutes and serve hot."
+
+            ]
+
+        },
+
+
+        "Creamy Pasta": {
+
+            cuisine: "Italian",
+
+            image:
+            "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=1000&q=80",
+
+            description:
+            "Delicious creamy pasta prepared with garlic, herbs, cheese and fresh vegetables.",
+
+            rating: "4.7",
+
+            time: "30 min",
+
+            servings: "2",
+
+            difficulty: "Easy",
+
+            ingredients: [
+
+                "200g pasta",
+                "2 tablespoons butter",
+                "2 cloves garlic",
+                "1/2 cup cream",
+                "1/2 cup cheese",
+                "Mixed herbs",
+                "Black pepper",
+                "Salt"
+
+            ],
+
+            steps: [
+
+                "Boil pasta in salted water until tender.",
+
+                "Heat butter and sauté chopped garlic.",
+
+                "Add cream and cook on low heat.",
+
+                "Add cheese, herbs and black pepper.",
+
+                "Add the cooked pasta and mix well.",
+
+                "Cook for two minutes and serve hot."
+
+            ]
+
+        },
+
+
+        "Vegetable Fried Rice": {
+
+            cuisine: "Chinese",
+
+            image:
+            "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=1000&q=80",
+
+            description:
+            "Quick and tasty fried rice made with fresh vegetables and soy sauce.",
+
+            rating: "4.6",
+
+            time: "25 min",
+
+            servings: "3",
+
+            difficulty: "Easy",
+
+            ingredients: [
+
+                "2 cups cooked rice",
+                "1 carrot",
+                "1/2 cup beans",
+                "1 capsicum",
+                "2 tablespoons soy sauce",
+                "2 tablespoons oil",
+                "Spring onion",
+                "Pepper",
+                "Salt"
+
+            ],
+
+            steps: [
+
+                "Heat oil in a wok or large pan.",
+
+                "Add chopped vegetables and stir-fry them.",
+
+                "Add cooked rice and mix well.",
+
+                "Add soy sauce, pepper and salt.",
+
+                "Stir-fry everything on high heat.",
+
+                "Garnish with spring onion and serve hot."
+
+            ]
+
+        },
+
+
+        "Healthy Salad": {
+
+            cuisine: "Healthy",
+
+            image:
+            "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1000&q=80",
+
+            description:
+            "Fresh and nutritious salad made with vegetables, greens, nuts and a light dressing.",
+
+            rating: "4.8",
+
+            time: "15 min",
+
+            servings: "2",
+
+            difficulty: "Easy",
+
+            ingredients: [
+
+                "Lettuce",
+                "Tomato",
+                "Cucumber",
+                "Carrot",
+                "Sweet corn",
+                "Nuts",
+                "Lemon juice",
+                "Black pepper",
+                "Salt"
+
+            ],
+
+            steps: [
+
+                "Wash all vegetables thoroughly.",
+
+                "Chop the vegetables into small pieces.",
+
+                "Add lettuce, tomato, cucumber, carrot and corn to a bowl.",
+
+                "Add nuts and lemon juice.",
+
+                "Season with pepper and salt.",
+
+                "Mix everything well and serve fresh."
+
+            ]
+
+        }
+
+    };
+
+
+    /* =========================================
+       GET SELECTED RECIPE
+    ========================================= */
+
+    const selectedRecipe =
+        localStorage.getItem("selectedRecipe")
+        || "Butter Chicken";
+
+
+    const recipe =
+        recipes[selectedRecipe]
+        || recipes["Butter Chicken"];
+
+
+    /* =========================================
+       DISPLAY RECIPE
+    ========================================= */
+
+    document.getElementById("recipeName")
+        .textContent = selectedRecipe;
+
+    document.getElementById("recipeCuisine")
+        .textContent = recipe.cuisine;
+
+    document.getElementById("recipeDescription")
+        .textContent = recipe.description;
+
+    document.getElementById("recipeRating")
+        .textContent = recipe.rating;
+
+    document.getElementById("recipeTime")
+        .textContent = recipe.time;
+
+    document.getElementById("recipeServings")
+        .textContent = recipe.servings;
+
+    document.getElementById("recipeDifficulty")
+        .textContent = recipe.difficulty;
+
+    document.getElementById("recipeImage")
+        .src = recipe.image;
+
+    document.getElementById("recipeImage")
+        .alt = selectedRecipe;
+
+
+    /* =========================================
+       INGREDIENTS
+    ========================================= */
+
+    const ingredientList =
+        document.getElementById("ingredients");
+
+    ingredientList.innerHTML = "";
+
+    recipe.ingredients.forEach(function(item) {
+
+        const li =
+            document.createElement("li");
+
+        li.textContent = item;
+
+        ingredientList.appendChild(li);
+
+    });
+
+
+    /* =========================================
+       COOKING STEPS
+    ========================================= */
+
+    const stepsContainer =
+        document.querySelector(
+            ".content-grid .content-card:nth-child(2)"
+        );
+
+    const tip =
+        stepsContainer.querySelector(
+            ".cooking-tip"
+        );
+
+
+    stepsContainer
+        .querySelectorAll(".step")
+        .forEach(function(step) {
+
+            step.remove();
+
+        });
+
+
+    recipe.steps.forEach(function(stepText, index) {
+
+        const step =
+            document.createElement("div");
+
+        step.className = "step";
+
+        step.innerHTML = `
+
+            <div class="step-number">
+                ${index + 1}
+            </div>
+
+            <p class="step-text">
+                ${stepText}
+            </p>
+
+        `;
+
+        stepsContainer.insertBefore(
+            step,
+            tip
+        );
+
+    });
+
+
+    /* =========================================
+       ADD FAVORITE
+    ========================================= */
+
+    function addFavorite() {
+
+        let favorites =
+            JSON.parse(
+                localStorage.getItem("favorites")
+            ) || [];
+
+
+        if (
+            favorites.includes(selectedRecipe)
+        ) {
+
+            alert(
+                selectedRecipe +
+                " is already in your Favorites ❤️"
+            );
+
+            return;
+
+        }
+
+
+        favorites.push(selectedRecipe);
+
+
+        localStorage.setItem(
+            "favorites",
+            JSON.stringify(favorites)
+        );
+
+
+        alert(
+            selectedRecipe +
+            " added to Favorites ❤️"
+        );
+
+    }
+
+
+    /* =========================================
+       BACK
+    ========================================= */
+
+    function goBack() {
+
+        window.location.href =
+            "recipes.html";
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sign Up | Food Recipe</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f8f8f8;
+            color: #222;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 72px;
+            background: #292929;
+            display: flex;
+            align-items: center;
+            padding: 0 55px;
+            gap: 45px;
+        }
+
+        .logo {
+            width: 150px;
+            height: 62px;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            flex: 1;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff9f0a;
+        }
+
+        .home-btn {
+            border: 1px solid #ff9f0a;
+            background: transparent;
+            color: white;
+            padding: 9px 17px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .home-btn:hover {
+            background: #ff9f0a;
+            color: #222;
+        }
+
+        /* ================= SIGNUP AREA ================= */
+
+        .signup-section {
+            min-height: calc(100vh - 72px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(255, 159, 10, 0.12),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(63, 125, 88, 0.10),
+                    transparent 30%
+                ),
+                #f8f8f8;
+        }
+
+        /* ================= SIGNUP CARD ================= */
+
+        .signup-card {
+            width: 480px;
+            background: white;
+            border-radius: 16px;
+            padding: 32px 40px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+            border: 1px solid #e6e6e6;
+        }
+
+        .signup-logo {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .signup-logo img {
+            width: 115px;
+            height: 65px;
+            object-fit: contain;
+        }
+
+        .signup-card h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 7px;
+            color: #222;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        /* ================= FORM ================= */
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .input-box {
+            position: relative;
+        }
+
+        .input-box span {
+            position: absolute;
+            left: 14px;
+            top: 12px;
+            font-size: 17px;
+        }
+
+        .input-box input,
+        .input-box select {
+            width: 100%;
+            padding: 12px 14px 12px 43px;
+            border: 1px solid #d8d8d8;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            background: white;
+            transition: 0.3s;
+        }
+
+        .input-box input:focus,
+        .input-box select:focus {
+            border-color: #f28c00;
+            box-shadow: 0 0 0 3px rgba(242, 140, 0, 0.10);
+        }
+
+        /* ================= TWO COLUMNS ================= */
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* ================= TERMS ================= */
+
+        .terms {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin: 5px 0 20px;
+            color: #666;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .terms input {
+            margin-top: 3px;
+            accent-color: #f28c00;
+        }
+
+        .terms a {
+            color: #e77b00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* ================= SIGNUP BUTTON ================= */
+
+        .signup-submit {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #f28c00;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .signup-submit:hover {
+            background: #d96f00;
+            transform: translateY(-1px);
+        }
+
+        /* ================= MESSAGE ================= */
+
+        .message {
+            display: none;
+            margin-top: 14px;
+            padding: 10px;
+            border-radius: 7px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .error {
+            background: #ffe7e5;
+            color: #c0392b;
+        }
+
+        .success {
+            background: #e5f7eb;
+            color: #16803c;
+        }
+
+        /* ================= LOGIN LINK ================= */
+
+        .login-text {
+            text-align: center;
+            margin-top: 20px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .login-text a {
+            color: #e77b00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 750px) {
+
+            .navbar {
+                padding: 0 20px;
+                gap: 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .home-btn {
+                margin-left: auto;
+            }
+        }
+
+        @media (max-width: 520px) {
+
+            .signup-card {
+                width: 100%;
+                padding: 28px 22px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .signup-section {
+                padding: 25px 15px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar">
+
+        <img
+            src="logo.png"
+            alt="Food Recipe Logo"
+            class="logo"
+        >
+
+        <nav class="nav-links">
+
+            <a href="index.html">Home</a>
+
+            <a href="recipes.html">All Recipes</a>
+
+            <a href="cuisines.html">Cuisines</a>
+
+            <a href="meal-planner.html">Meal Planner</a>
+
+            <a href="favorites.html">Favorites</a>
+
+        </nav>
+
+        <button
+            class="home-btn"
+            onclick="goHome()"
+        >
+            ← Home
+        </button>
+
+    </header>
+
+
+    <!-- ================= SIGNUP ================= -->
+
+    <main class="signup-section">
+
+        <div class="signup-card">
+
+
+            <!-- LOGO -->
+
+            <div class="signup-logo">
+
+                <img
+                    src="logo.png"
+                    alt="Food Recipe"
+                >
+
+            </div>
+
+
+            <h1>Create Account</h1>
+
+            <p class="subtitle">
+                Join us and discover delicious recipes.
+            </p>
+
+
+            <!-- FORM -->
+
+            <form id="signupForm">
+
+
+                <!-- NAME -->
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Full Name
+                    </label>
+
+                    <div class="input-box">
+
+                        <span>👤</span>
+
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Enter your full name"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <div class="input-box">
+
+                        <span>✉️</span>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- PHONE + CUISINE -->
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Phone Number
+                        </label>
+
+                        <div class="input-box">
+
+                            <span>📱</span>
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                placeholder="Phone number"
+                                pattern="[0-9]{10}"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="favoriteCuisine">
+                            Favorite Cuisine
+                        </label>
+
+                        <div class="input-box">
+
+                            <span>🍴</span>
+
+                            <select id="favoriteCuisine" required>
+
+                                <option value="">
+                                    Select
+                                </option>
+
+                                <option value="Indian">
+                                    Indian
+                                </option>
+
+                                <option value="Italian">
+                                    Italian
+                                </option>
+
+                                <option value="Chinese">
+                                    Chinese
+                                </option>
+
+                                <option value="Mexican">
+                                    Mexican
+                                </option>
+
+                                <option value="Healthy">
+                                    Healthy
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD + CONFIRM -->
+
+                <div class="form-row">
+
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div class="input-box">
+
+                            <span>🔒</span>
+
+                            <input
+                                type="password"
+                                id="password"
+                                placeholder="Create password"
+                                minlength="6"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="confirmPassword">
+                            Confirm Password
+                        </label>
+
+                        <div class="input-box">
+
+                            <span>🔐</span>
+
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                placeholder="Confirm password"
+                                minlength="6"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TERMS -->
+
+                <label class="terms">
+
+                    <input
+                        type="checkbox"
+                        id="terms"
+                        required
+                    >
+
+                    <span>
+                        I agree to the
+                        <a href="#">
+                            Terms & Conditions
+                        </a>
+                        and understand that my account
+                        information will be stored locally.
+                    </span>
+
+                </label>
+
+
+                <!-- BUTTON -->
+
+                <button
+                    type="submit"
+                    class="signup-submit"
+                >
+                    Create Account →
+                </button>
+
+
+                <!-- MESSAGE -->
+
+                <div
+                    id="message"
+                    class="message"
+                ></div>
+
+
+            </form>
+
+
+            <!-- LOGIN -->
+
+            <div class="login-text">
+
+                Already have an account?
+
+                <a href="login.html">
+                    Login here
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        const signupForm =
+            document.getElementById("signupForm");
+
+        const message =
+            document.getElementById("message");
+
+
+        signupForm.addEventListener(
+            "submit",
+            function(event) {
+
+                event.preventDefault();
+
+
+                /* Get form values */
+
+                const name =
+                    document.getElementById("name")
+                    .value.trim();
+
+                const email =
+                    document.getElementById("email")
+                    .value.trim();
+
+                const phone =
+                    document.getElementById("phone")
+                    .value.trim();
+
+                const favoriteCuisine =
+                    document.getElementById("favoriteCuisine")
+                    .value;
+
+                const password =
+                    document.getElementById("password")
+                    .value;
+
+                const confirmPassword =
+                    document.getElementById("confirmPassword")
+                    .value;
+
+
+                /* Check password */
+
+                if (password !== confirmPassword) {
+
+                    showMessage(
+                        "Passwords do not match.",
+                        "error"
+                    );
+
+                    return;
+                }
+
+
+                /* Check existing account */
+
+                const existingUser =
+                    JSON.parse(
+                        localStorage.getItem("user")
+                    );
+
+
+                if (
+                    existingUser &&
+                    existingUser.email === email
+                ) {
+
+                    showMessage(
+                        "An account with this email already exists.",
+                        "error"
+                    );
+
+                    return;
+                }
+
+
+                /* Create user object */
+
+                const user = {
+
+                    name: name,
+
+                    email: email,
+
+                    phone: phone,
+
+                    favoriteCuisine:
+                        favoriteCuisine,
+
+                    password: password
+
+                };
+
+
+                /* Save to Local Storage */
+
+                localStorage.setItem(
+                    "user",
+                    JSON.stringify(user)
+                );
+
+
+                /* Success */
+
+                showMessage(
+                    "Account created successfully! Redirecting to login...",
+                    "success"
+                );
+
+
+                /* Redirect */
+
+                setTimeout(function() {
+
+                    window.location.href =
+                        "login.html";
+
+                }, 1200);
+
+            }
+        );
+
+
+        /* ================= MESSAGE ================= */
+
+        function showMessage(text, type) {
+
+            message.textContent = text;
+
+            message.className =
+                "message " + type;
+
+            message.style.display = "block";
+
+        }
+
+
+        /* ================= HOME ================= */
+
+        function goHome() {
+
+            window.location.href =
+                "index.html";
+
+        }
+
+    </script>
+
+</body>
+</html>
